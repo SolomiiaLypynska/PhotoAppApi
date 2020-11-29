@@ -3,6 +3,7 @@ package com.appdevelopervlog.photoapp.api.users.ui.controllers;
 import com.appdevelopervlog.photoapp.api.users.service.UsersService;
 import com.appdevelopervlog.photoapp.api.users.shared.UserDto;
 import com.appdevelopervlog.photoapp.api.users.ui.model.CreateUserRequestModel;
+import com.appdevelopervlog.photoapp.api.users.ui.model.CreateUserResponseModel;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,12 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity createUser(@Valid @RequestBody CreateUserRequestModel userDetails) {
+    public ResponseEntity<CreateUserResponseModel> createUser(@Valid @RequestBody CreateUserRequestModel userDetails) {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         UserDto userDto = modelMapper.map(userDetails, UserDto.class);
-        usersService.createUser(userDto);
-        return new ResponseEntity(HttpStatus.CREATED);
+        UserDto createdUserDto = usersService.createUser(userDto);
+        CreateUserResponseModel responseModel = modelMapper.map(createdUserDto, CreateUserResponseModel.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseModel);
     }
 }
