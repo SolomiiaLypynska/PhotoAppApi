@@ -35,6 +35,5 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                                             HttpServletResponse response,
                                             FilterChain filterChain,
                                             Authentication authentication) {
-
     }
 }
