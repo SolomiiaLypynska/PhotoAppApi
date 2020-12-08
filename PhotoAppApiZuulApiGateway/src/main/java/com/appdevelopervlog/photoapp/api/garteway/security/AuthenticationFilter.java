@@ -1,7 +1,6 @@
 package com.appdevelopervlog.photoapp.api.garteway.security;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class AuthenticationFilter extends BasicAuthenticationFilter {
     private Environment environment;
@@ -49,7 +47,7 @@ public class AuthenticationFilter extends BasicAuthenticationFilter {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
-        if (userId == null){
+        if (userId == null) {
             return null;
         }
         return new UsernamePasswordAuthenticationToken(userId, null, new ArrayList<>());
