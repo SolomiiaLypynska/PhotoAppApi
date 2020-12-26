@@ -7,6 +7,7 @@ import com.appdevelopervlog.photoapp.api.users.ui.model.CreateUserResponseModel;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +20,14 @@ import javax.validation.Valid;
 public class UserController {
 
     @Autowired
+    private Environment environment;
+
+    @Autowired
     private UsersService usersService;
 
     @GetMapping("/status/check")
     public String status() {
-        return "Working users";
+        return "Working users" + " , with token - " + environment.getProperty("token.secret");
     }
 
     @PostMapping(
