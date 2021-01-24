@@ -1,6 +1,9 @@
 package com.appdevelopervlog.photoapp.api.users.shared;
 
+import com.appdevelopervlog.photoapp.api.users.ui.model.AlbumResponseModel;
+
 import java.io.Serializable;
+import java.util.List;
 
 public class UserDto implements Serializable {
     private String firstName;
@@ -9,6 +12,7 @@ public class UserDto implements Serializable {
     private String email;
     private String userId;
     private String encryptedPassword;
+    List<AlbumResponseModel> albumsList;
 
     public String getFirstName() {
         return firstName;
@@ -56,5 +60,13 @@ public class UserDto implements Serializable {
 
     public void setEncryptedPassword(String encryptedPassword) {
         this.encryptedPassword = encryptedPassword;
+    }
+
+    public List<AlbumResponseModel> getAlbumsList() {
+        return albumsList;
+    }
+
+    public void setAlbumsList(List<AlbumResponseModel> albumsList) {
+        this.albumsList = albumsList;
     }
 }
