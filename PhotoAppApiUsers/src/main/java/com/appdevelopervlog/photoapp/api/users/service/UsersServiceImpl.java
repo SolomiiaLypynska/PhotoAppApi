@@ -5,21 +5,19 @@ import com.appdevelopervlog.photoapp.api.users.data.UserEntity;
 import com.appdevelopervlog.photoapp.api.users.data.UserRepository;
 import com.appdevelopervlog.photoapp.api.users.shared.UserDto;
 import com.appdevelopervlog.photoapp.api.users.ui.model.AlbumResponseModel;
+import feign.FeignException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,9 +26,11 @@ import java.util.UUID;
 @Service
 public class UsersServiceImpl implements UsersService {
 
+    Logger logger = LoggerFactory.getLogger(UsersServiceImpl.class);
+
     UserRepository userRepository;
     BCryptPasswordEncoder passwordEncoder;
-  //  RestTemplate restTemplate;
+    //  RestTemplate restTemplate;
     Environment environment;
     AlbumsServiceClient albumsServiceClient;
 
@@ -82,8 +82,12 @@ public class UsersServiceImpl implements UsersService {
 //                restTemplate.exchange(albumsUrl, HttpMethod.GET, null, new ParameterizedTypeReference<List<AlbumResponseModel>>() {
 //                });
 //        List<AlbumResponseModel> albumsList = albumsListResponse.getBody();
-
-        List<AlbumResponseModel> albumsList = albumsServiceClient.getAlbums(userId);
+        List<AlbumResponseModel> albumsList = null;
+        try {
+            albumsList = albumsServiceClient.getAlbums(userId);
+        } catch (FeignException e) {
+        logger.error(e.getLocalizedMessage());
+        }
         userDto.setAlbumsList(albumsList);
         return userDto;
     }
