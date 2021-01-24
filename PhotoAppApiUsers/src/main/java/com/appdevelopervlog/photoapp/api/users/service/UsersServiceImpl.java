@@ -81,13 +81,8 @@ public class UsersServiceImpl implements UsersService {
 //        ResponseEntity<List<AlbumResponseModel>> albumsListResponse =
 //                restTemplate.exchange(albumsUrl, HttpMethod.GET, null, new ParameterizedTypeReference<List<AlbumResponseModel>>() {
 //                });
-//        List<AlbumResponseModel> albumsList = albumsListResponse.getBody();
-        List<AlbumResponseModel> albumsList = null;
-        try {
-            albumsList = albumsServiceClient.getAlbums(userId);
-        } catch (FeignException e) {
-        logger.error(e.getLocalizedMessage());
-        }
+        List<AlbumResponseModel> albumsList = albumsServiceClient.getAlbums(userId);
+
         userDto.setAlbumsList(albumsList);
         return userDto;
     }

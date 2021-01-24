@@ -1,5 +1,6 @@
 package com.appdevelopervlog.photoapp.api.users;
 
+import com.appdevelopervlog.photoapp.api.users.shared.FeignErrorDecoder;
 import feign.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,4 +35,9 @@ public class PhotoAppApiUsersApplication {
 	Logger.Level feignLoggerLevel(){
 		return Logger.Level.FULL;
 	}
+
+//	@Bean
+//	public FeignErrorDecoder getFeignErrorDecoder(){
+//		return new FeignErrorDecoder();
+//	}
 }
