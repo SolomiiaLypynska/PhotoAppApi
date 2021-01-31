@@ -12,7 +12,7 @@ import java.util.List;
 @FeignClient(name = "albums-ws", fallback = AlbusmsFallback.class)
 public interface AlbumsServiceClient {
 
-    @GetMapping("/users/{id}/albumsss")
+    @GetMapping("/users/{id}/albums")
     List<AlbumResponseModel> getAlbums(@PathVariable String id);
 }
 
