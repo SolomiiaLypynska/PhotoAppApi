@@ -43,7 +43,7 @@ class AlbumsServiceClientFallback implements AlbumsServiceClient {
     @Override
     public List<AlbumResponseModel> getAlbums(String id) {
         if (throwable instanceof FeignException && ((FeignException) throwable).status() == 404){
-            logger.error("404 Error when userId {} . Error mesage - {}", id, throwable.getLocalizedMessage() );
+            logger.error("404 Error when userId {} . Error message - {}", id, throwable.getLocalizedMessage() );
         } else {
             logger.error("Other error took place: {}", throwable.getLocalizedMessage());
         }

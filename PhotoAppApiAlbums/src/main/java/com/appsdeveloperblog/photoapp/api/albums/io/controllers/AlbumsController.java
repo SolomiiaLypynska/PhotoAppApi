@@ -24,10 +24,11 @@ import org.slf4j.LoggerFactory;
 @RestController
 @RequestMapping("/users/{id}/albums")
 public class AlbumsController {
-    
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     AlbumsService albumsService;
-    Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @GetMapping( 
             produces = { 
                 MediaType.APPLICATION_JSON_VALUE,
